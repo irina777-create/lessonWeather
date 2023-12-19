@@ -9,49 +9,28 @@
 //deg - напрям у градусах
 //icon - значок, де 10d код іконки
 //http://openweathermap.org/img/w/10d.png
-const weatherBlock=document.querySelector('#weather');
-const server='http://api.openweathermap.org/data/2.5/weather?q=LVIV&units=metric&APPID=5d066958a60d315387d9492393935c19';
-const responce= fetch(server,{
-    method:'Get',
+let weather;
+
+fetch('http://api.openweathermap.org/data/2.5/weather?q=LVIV&units=metric&APPID=5d066958a60d315387d9492393935c19')
+.then(function(res){
+    console.log(res);
+    return res.json
 })
-const responceResult =await response.json();
+.then(function(myDATA){
+    consol.log(myDATA)
+    weather=myDATA;
+})
 
-if(response.ok){
-    getWeather(responceResult);
-}else{
-    weatherBlock.innerHTML=responceResult.message;
-}
-function getWeather(data) {
-    console.log(data);
-
-    const location = data.name;
-    const temp = Math.round(data.main.feels_like);
-    const weatherStatus = data.weather[0].main;
-    const weatherIcon = data.weather[0].icon;
+ const divElem=document.querySelector('.weather header') ;
+ console.log(divElem); 
 
 
-    const template =` '< class="weather_header"
-        <div class="weather_main"
-           <div class="weather_city">${q}</div>
-       <div class="weather_status">${temp}</div>
-    </div> 
-    <div class="weather_status">${pressure}
-    </div>
-     <div class="weather_status">${description}
-    </div>
-    </div> <div class="weather_status">${speed}
-    </div>
-    </div> <div class="weather_status">${dec}
-    </div>
-    </div>
-    <div class="weather_icon">
-        <img src="http://openweathermap.org/img/w/10d.png"alt="Clouds">    </div>
-    </div>
 
- </div>
-}`
-
-}
-if (weatherBlock){
-    loadWeather();
-}
+    divElem.innerHTML= `${q}
+    ${temp}
+    ${pressure}
+    ${description}
+    ${speed}
+    ${dec}`
+    
+    
